@@ -1,4 +1,5 @@
-// Theme toggle function
+const API = window.API_CONFIG.BASE_URL;
+
 function toggleTheme() {
   const body = document.body;
   const btn = document.querySelector(".theme-toggle-sidebar");

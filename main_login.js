@@ -1,3 +1,5 @@
+const API = window.API_CONFIG.BASE_URL;
+
 function toggleTheme() {
   const body = document.body;
   const btn = document.querySelector(".theme-toggle");
@@ -34,7 +36,7 @@ window.onload = async function () {
     }
 
     try {
-      const response = await fetch("http://localhost:5005/api/auth/verify", {
+      const response = await fetch("${API}/api/auth/verify", {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -73,7 +75,7 @@ async function login() {
 
   try {
     console.log("Sending fetch request...");
-    const response = await fetch("http://localhost:5005/api/auth/login", {
+    const response = await fetch("${API}/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,17 +112,14 @@ async function login() {
             messageDiv.textContent = "Sending confirmation email...";
 
             try {
-              const resendResponse = await fetch(
-                "http://localhost:5005/api/auth/resend",
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    user: email,
-                    password: password,
-                  }),
-                },
-              );
+              const resendResponse = await fetch("${API}/api/auth/resend", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  user: email,
+                  password: password,
+                }),
+              });
 
               const resendResult = await resendResponse.json();
               messageDiv.style.color = resendResult.success ? "green" : "red";
@@ -175,7 +174,7 @@ async function register() {
   } else {
     try {
       console.log("Sending fetch request...");
-      const response = await fetch("http://localhost:5005/api/auth/register", {
+      const response = await fetch("${API}/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
