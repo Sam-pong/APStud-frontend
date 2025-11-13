@@ -87,8 +87,9 @@ async function login() {
     });
 
     console.log("Response received:", response.status);
-    const result = await response.json();
     console.log("Response", response);
+
+    const result = await response.json();
     console.log("Result:", result);
     if (result.success) {
       messageDiv.style.color = "green";
