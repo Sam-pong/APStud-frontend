@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AP Stud</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Andale Mono, monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s ease;
+            position: relative;
+        }
+
+        /* Light theme */
+        body.light {
+            background: linear-gradient(135deg, #ffdef2, #f2e2ff, #e2eeff, #ddfffc, #ffffe3);
+        }
+
+        /* Dark theme */
+        body.dark {
+            background: linear-gradient(135deg, #440525, #53092f, #620d38, #720a3f, #820745);
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            gap: 60px;
+        }
+
+        .title-section {
+            text-align: left;
+        }
+
+        .title {
+            font-size: 80px;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        body.dark .title {
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #555;
+            font-weight: normal;
+        }
+
+        body.dark .subtitle {
+            color: #ddd;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            width: 350px;
+            align-items: center;
+            min-width: 320px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .login-box {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .login-box h2 {
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+        body.dark .login-box h2 {
+            color: #fff;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        body.dark .input-group label {
+            color: #ddd;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        body.dark .input-group input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #f2e2ff;
+        }
+
+        body.dark .input-group input:focus {
+            border-color: #820745;
+        }
+
+        button {
+            padding: 12px;
+            background: #f2e2ff;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background: #e2eeff;
+        }
+
+        body.dark button {
+            background: #820745;
+            color: #fff;
+        }
+
+        body.dark button:hover {
+            background: #720a3f;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 32px;
+            transition: transform 0.3s ease;
+            padding: 0;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.2);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            clear: both;
+        }
+
+        body.dark .footer {
+            color: #aaa;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        body.dark .back-link {
+            color: #ddd;
+        }
+
+        body.dark .back-link:hover {
+            color: #fff;
+        }
+
+        #loginMessage {
+            min-height: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                justify-content: center;
+                padding: 20px;
+                gap: 10px;
+            }
+
+            .title-section {
+                text-align: center;
+            }
+
+            .login-box {
+                width: 100%;
+                max-width: 350px;
+            }
+            .back-link {
+    padding: 12px 0;
+    text-decoration: none;
+}
+        }
+    </style>
+</head>
+<body class="light">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    
+    <div class="container">
+        <div class="title-section">
+            <div class="title">Register</div>
+            <div class="subtitle">To AP Stud.</div>
+        </div>
+        <div class="login-box">
+            <h2>Register</h2>
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Enter username">
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter email">
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter password">
+            </div>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm password">
+            </div>
+            <div id="loginMessage" style="text-align: center; margin-bottom: 20px; min-height: 20px;"></div>
+            <button name="regButton" onclick="register()"style="display: block; margin: 0 auto;">Register</button>
+            <div style="margin-top: 20px; text-align: center;"></div>
+            <a href="index.html" class="back-link">Go back to login</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        Made by Sam
+    </div>
+
+    <script src="main_login.js"></script>
+</body>
+</html>

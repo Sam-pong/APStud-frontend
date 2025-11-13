@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard - AP Stud</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family:
+                    Andale Mono,
+                    monospace;
+                min-height: 100vh;
+                display: flex;
+                transition: background 0.3s ease;
+            }
+
+            /* Light theme */
+            body.light {
+                background: linear-gradient(
+                    135deg,
+                    #ffdef2,
+                    #f2e2ff,
+                    #e2eeff,
+                    #ddfffc,
+                    #ffffe3
+                );
+            }
+
+            /* Dark theme */
+            body.dark {
+                background: linear-gradient(
+                    135deg,
+                    #440525,
+                    #53092f,
+                    #620d38,
+                    #720a3f,
+                    #820745
+                );
+            }
+
+            /* Sidebar Navigation */
+            .sidebar {
+                width: 280px;
+                background: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+                transition: transform 0.3s ease;
+                position: relative;
+            }
+
+            body.dark .sidebar {
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            .sidebar.collapsed {
+                transform: translateX(-100%);
+                position: absolute;
+                height: 100%;
+                z-index: 100;
+            }
+
+            /* User Info Button */
+            .user-info {
+                background: rgba(255, 255, 255, 0.3);
+                padding: 20px;
+                border-radius: 12px;
+                margin-bottom: 30px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+                border: none;
+                width: 100%;
+                text-align: left;
+            }
+
+            .user-info:hover {
+                background: rgba(255, 255, 255, 0.4);
+            }
+
+            body.dark .user-info {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            body.dark .user-info:hover {
+                background: rgba(255, 255, 255, 0.15);
+            }
+
+            .user-info h3 {
+                color: #333;
+                margin-bottom: 5px;
+            }
+
+            body.dark .user-info h3 {
+                color: #fff;
+            }
+
+            .user-info p {
+                color: #666;
+                font-size: 14px;
+            }
+
+            body.dark .user-info p {
+                color: #aaa;
+            }
+
+            /* Navigation Menu */
+            .nav-menu {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav-button {
+                background: rgba(255, 255, 255, 0.3);
+                border: none;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: #333;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+                text-align: left;
+                font-family:
+                    Andale Mono,
+                    monospace;
+            }
+
+            .nav-button:hover {
+                background: rgba(255, 255, 255, 0.4);
+            }
+
+            .nav-button.active {
+                background: #f2e2ff;
+            }
+
+            body.dark .nav-button {
+                background: rgba(255, 255, 255, 0.1);
+                color: #fff;
+            }
+
+            body.dark .nav-button:hover {
+                background: rgba(255, 255, 255, 0.15);
+            }
+
+            body.dark .nav-button.active {
+                background: #820745;
+            }
+
+            /* Theme Toggle at bottom */
+            .theme-toggle-sidebar {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 32px;
+                transition: transform 0.3s ease;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .theme-toggle-sidebar:hover {
+                transform: scale(1.2);
+            }
+
+            /* Main Content Area */
+            .main-content {
+                flex: 1;
+                padding: 40px;
+                overflow-y: auto;
+            }
+
+            .content-header {
+                margin-bottom: 30px;
+            }
+
+            .content-header h1 {
+                color: #333;
+                font-size: 36px;
+                margin-bottom: 10px;
+            }
+
+            body.dark .content-header h1 {
+                color: #fff;
+            }
+
+            .content-header p {
+                color: #666;
+                font-size: 16px;
+            }
+
+            body.dark .content-header p {
+                color: #aaa;
+            }
+
+            /* Feature Cards */
+            .feature-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .feature-card {
+                background: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                padding: 30px;
+                border-radius: 16px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border: none;
+                text-align: left;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            }
+
+            .feature-card:hover {
+                transform: translateY(-5px);
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            body.dark .feature-card {
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            body.dark .feature-card:hover {
+                background: rgba(0, 0, 0, 0.4);
+            }
+
+            .feature-icon {
+                font-size: 48px;
+                margin-bottom: 15px;
+            }
+
+            .feature-card h3 {
+                color: #333;
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            body.dark .feature-card h3 {
+                color: #fff;
+            }
+
+            .feature-card p {
+                color: #666;
+                font-size: 14px;
+            }
+
+            body.dark .feature-card p {
+                color: #aaa;
+            }
+
+            /* Hamburger Menu */
+            .hamburger {
+                display: none;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background: rgba(255, 255, 255, 0.3);
+                backdrop-filter: blur(10px);
+                border: none;
+                padding: 10px 15px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 24px;
+                z-index: 101;
+            }
+
+            body.dark .hamburger {
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .sidebar {
+                    position: fixed;
+                    height: 100%;
+                    z-index: 100;
+                    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
+                }
+
+                .sidebar.collapsed {
+                    transform: translateX(-100%);
+                }
+
+                .hamburger {
+                    display: block;
+                }
+
+                .main-content {
+                    padding: 80px 20px 20px 20px;
+                }
+
+                .feature-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body class="light">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+
+        <div class="sidebar" id="sidebar">
+            <button class="user-info" onclick="goToProfile()">
+                <h3 id="profileUsername">Error</h3>
+                <p id="profileEmail">Error</p>
+            </button>
+
+            <!-- Navigation Menu -->
+            <div class="nav-menu">
+                <button class="nav-button active" onclick="showHome()">
+                    🏠 Home
+                </button>
+                <button class="nav-button" onclick="showSettings()">
+                    ⚙️ Settings
+                </button>
+            </div>
+
+            <button id="logoutBtn" class="nav-button" onclick="logoutbruh()">
+                Logout
+            </button>
+
+            <button class="theme-toggle-sidebar" onclick="toggleTheme()">
+                🌙
+            </button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1>Welcome to AP Stud</h1>
+                <p>Your all-purpose dashboard for educational purposes</p>
+            </div>
+
+            <!-- Feature Cards Grid -->
+            <div class="feature-grid">
+                <button class="feature-card" onclick="featureClick(1)">
+                    <div class="feature-icon">📚</div>
+                    <h3>Feature 1</h3>
+                    <p>Description for feature 1 goes here</p>
+                </button>
+
+                <button class="feature-card" onclick="featureClick(2)">
+                    <div class="feature-icon">📝</div>
+                    <h3>Feature 2</h3>
+                    <p>Description for feature 2 goes here</p>
+                </button>
+
+                <button class="feature-card" onclick="featureClick(3)">
+                    <div class="feature-icon">📊</div>
+                    <h3>Feature 3</h3>
+                    <p>Description for feature 3 goes here</p>
+                </button>
+            </div>
+        </div>
+
+        <script src="dash.js"></script>
+    </body>
+</html>
