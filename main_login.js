@@ -36,7 +36,7 @@ window.onload = async function () {
     }
 
     try {
-      const response = await fetch("${API}/api/auth/verify", {
+      const response = await fetch(`${API}/api/auth/verify`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -75,7 +75,7 @@ async function login() {
 
   try {
     console.log("Sending fetch request...");
-    const response = await fetch("${API}/api/auth/login", {
+    const response = await fetch(`${API}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +113,7 @@ async function login() {
             messageDiv.textContent = "Sending confirmation email...";
 
             try {
-              const resendResponse = await fetch("${API}/api/auth/resend", {
+              const resendResponse = await fetch(`${API}/api/auth/resend`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -175,7 +175,7 @@ async function register() {
   } else {
     try {
       console.log("Sending fetch request...");
-      const response = await fetch("${API}/api/auth/register", {
+      const response = await fetch(`${API}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
