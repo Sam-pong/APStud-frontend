@@ -1,3 +1,3 @@
 window.API_CONFIG = {
-  BASE_URL: "http://localhost:5005",
+  BASE_URL: "https://apstud-backend.onrender.com",
 };
